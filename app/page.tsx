@@ -9,6 +9,7 @@ export default function Home() {
           alt="KMCQ Company Logo"
           width={157}
           height={0}
+          unoptimized
           className="w-[100px] sm:w-[120px] md:w-[157px]"
           style={{ height: 'auto' }}
         />
