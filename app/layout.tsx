@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import NetworkCanvas from "@/components/NetworkCanvas";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,21 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="network-bg">
-          <div className="network-node" style={{ top: "10%", left: "15%", animationDelay: "0s" }}></div>
-          <div className="network-node" style={{ top: "25%", left: "70%", animationDelay: "2s" }}></div>
-          <div className="network-node" style={{ top: "45%", left: "25%", animationDelay: "4s" }}></div>
-          <div className="network-node" style={{ top: "60%", left: "80%", animationDelay: "1s" }}></div>
-          <div className="network-node" style={{ top: "80%", left: "40%", animationDelay: "3s" }}></div>
-          <div className="network-node" style={{ top: "35%", left: "55%", animationDelay: "5s" }}></div>
-          <div className="network-node" style={{ top: "70%", left: "20%", animationDelay: "2.5s" }}></div>
-          <div className="network-node" style={{ top: "15%", left: "85%", animationDelay: "1.5s" }}></div>
-          <div className="network-line" style={{ top: "20%", left: "20%", width: "120px", transform: "rotate(25deg)", animationDelay: "0s" }}></div>
-          <div className="network-line" style={{ top: "50%", left: "40%", width: "80px", transform: "rotate(-15deg)", animationDelay: "3s" }}></div>
-          <div className="network-line" style={{ top: "35%", left: "60%", width: "100px", transform: "rotate(40deg)", animationDelay: "6s" }}></div>
-          <div className="network-line" style={{ top: "65%", left: "30%", width: "90px", transform: "rotate(-30deg)", animationDelay: "9s" }}></div>
-          <div className="network-line" style={{ top: "75%", left: "55%", width: "110px", transform: "rotate(10deg)", animationDelay: "12s" }}></div>
-        </div>
+        <NetworkCanvas />
         {children}
       </body>
     </html>
