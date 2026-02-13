@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="flex min-h-screen items-start justify-start pt-15 pl-15">
-      <div className="flex items-center gap-2 pl-[7px] pt-[7px]">
+      <div className="flex items-center gap-2 pl-[5px] pt-[5px]">
         <Image
           src="/kmcq-cloud-company-white-logo.png"
           alt="KMCQ Company Logo"
