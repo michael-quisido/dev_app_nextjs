@@ -5,7 +5,7 @@ export default function Home() {
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
 
   return (
-    <div className="flex min-h-screen flex-col pt-5 pl-5 pr-5">
+    <div className="flex min-h-screen flex-col pt-5 pl-5 pr-5 relative z-10">
       <div className="flex flex-col md:flex-row items-start md:justify-between">
         <div className="flex items-center gap-2 pl-[5px] pt-[5px]">
           <Image
