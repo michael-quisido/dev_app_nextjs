@@ -21,7 +21,7 @@ export default function Home() {
             KMCQ COMPANY
           </span>
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[25px] pt-[15px] md:pt-[120px] pl-[5px]">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[15px] pt-[15px] md:pt-[120px] pr-[20px]">
           {menuItems.map((item) => (
             <Link
               key={item}
@@ -32,6 +32,11 @@ export default function Home() {
             </Link>
           ))}
         </div>
+      </div>
+      <div className="flex flex-1 items-center justify-center">
+        <h1 className="font-ubuntu text-white text-[35px] sm:text-[50px] md:text-[70px] font-bold text-center tracking-wide">
+          Unlock Your Digital Future.
+        </h1>
       </div>
     </div>
   );
