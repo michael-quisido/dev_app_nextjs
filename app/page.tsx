@@ -13,10 +13,11 @@ export default function Home() {
             <Image
               src="/kmcq-cloud-company-white-logo.png"
               alt="KMCQ Company Logo"
-              width={157}
-              height={0}
+              width={150}
+              height={58}
               unoptimized
-              className="w-[100px] sm:w-[120px] md:w-[157px]"
+              loading="eager"
+              className="w-[90px] sm:w-[110px] md:w-[150px]"
               style={{ height: 'auto' }}
             />
           </div>
