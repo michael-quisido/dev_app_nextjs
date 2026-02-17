@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import TypewriterText from "@/components/TypewriterText";
+import { useState } from "react";
 
 export default function Home() {
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <div className="flex min-h-screen flex-col pt-5 pl-5 pr-5 relative z-10">
@@ -29,10 +33,20 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[45px] pt-[15px] md:pt-[120px] pr-[20px]">
           {menuItems.map((item, index) => (
-            <div key={item} className="fade-in-4s" style={{ animationDelay: `${index * 0.2}s` }}>
+            <div 
+              key={item} 
+              className="fade-in-4s px-2 py-1 rounded"
+              style={{ 
+                animationDelay: `${index * 0.2}s`,
+                backgroundColor: hoveredIndex === index ? 'white' : 'transparent'
+              }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
               <Link
                 href="#"
-                className="font-ubuntu text-white text-[15px] hover:text-gray-300 transition-colors"
+                className="font-ubuntu text-[15px] transition-colors"
+                style={{ color: hoveredIndex === index ? 'black' : 'white' }}
               >
                 {item}
               </Link>
