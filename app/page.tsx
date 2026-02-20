@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import TypewriterText from "@/components/TypewriterText";
+import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaSearch } from "react-icons/fa";
 import { useState } from "react";
 
 export default function Home() {
@@ -31,27 +32,61 @@ export default function Home() {
             delay={2000}
           />
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[45px] pt-[10px] md:pt-[95px] pr-[20px]">
-          {menuItems.map((item, index) => (
-            <div 
-              key={item} 
-              className="fade-in-4s px-2 py-1 rounded"
-              style={{ 
-                animationDelay: `${index * 0.2}s`,
-                backgroundColor: hoveredIndex === index ? 'white' : 'transparent'
-              }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <Link
-                href="#"
-                className="font-ubuntu text-[15px] transition-colors"
-                style={{ color: hoveredIndex === index ? 'black' : 'white' }}
+        <div className="flex flex-col items-end pt-[10px] md:pt-[50px] pr-[20px] mr-[-1px]">
+          <div className="flex items-center gap-[55px] pb-[5px] md:pb-[10px] mt-[-17px] md:mt-[-17px]">
+            <form action="https://www.google.com/search" method="get" target="_blank" className="flex items-center slide-in-left-3s" style={{ width: 171, height: 30 }}>
+              <input
+                type="text"
+                name="q"
+                placeholder="Search..."
+                className="w-full h-full px-3 rounded-l text-black text-sm bg-white"
+                style={{ width: 171, height: 30 }}
+              />
+              <button
+                type="submit"
+                className="flex items-center justify-center px-2 h-full rounded-r bg-gray-200"
+                style={{ height: 30 }}
               >
-                {item}
-              </Link>
+                <FaSearch size={16} color="#666" />
+              </button>
+            </form>
+            <div className="flex items-center gap-[17px] slide-in-left-4s">
+              <a href="#" className="transition-transform hover:scale-110">
+                <FaLinkedin size={30} color="#939393" style={{ height: 30, width: 'auto' }} />
+              </a>
+              <a href="#" className="transition-transform hover:scale-110">
+                <FaFacebook size={30} color="#939393" style={{ height: 30, width: 'auto' }} />
+              </a>
+              <a href="#" className="transition-transform hover:scale-110">
+                <FaInstagram size={30} color="#939393" style={{ height: 30, width: 'auto' }} />
+              </a>
+              <a href="#" className="transition-transform hover:scale-110">
+                <FaYoutube size={30} color="#939393" style={{ height: 30, width: 'auto' }} />
+              </a>
             </div>
-          ))}
+          </div>
+          <div className="flex items-center gap-[5px] md:gap-[45px] mt-[17px]">
+            {menuItems.map((item, index) => (
+              <div 
+                key={item} 
+                className="fade-in-4s px-2 py-1 rounded"
+                style={{ 
+                  animationDelay: `${index * 0.2}s`,
+                  backgroundColor: hoveredIndex === index ? 'white' : 'transparent'
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                <Link
+                  href="#"
+                  className="font-ubuntu text-[17px] transition-colors"
+                  style={{ color: hoveredIndex === index ? 'black' : 'white' }}
+                >
+                  {item}
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="flex flex-1 items-center justify-center">
