@@ -21,7 +21,7 @@ export default function Home() {
               height={58}
               unoptimized
               loading="eager"
-              className="w-[90px] sm:w-[110px] md:w-[150px]"
+              className="w-[90px] sm:w-[110px] md:w-[120px]"
               style={{ height: 'auto' }}
             />
           </div>
@@ -31,7 +31,7 @@ export default function Home() {
             delay={2000}
           />
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[45px] pt-[15px] md:pt-[120px] pr-[20px]">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-[5px] md:gap-[45px] pt-[10px] md:pt-[95px] pr-[20px]">
           {menuItems.map((item, index) => (
             <div 
               key={item} 
