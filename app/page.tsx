@@ -16,7 +16,7 @@ export default function Home() {
       {/* Mobile Header */}
       <div className="md:hidden flex flex-col">
         {/* Social Icons - Top Right */}
-        <div className="flex items-center justify-end gap-3 pr-[20px]">
+        <div className="flex items-center justify-end gap-3 pr-[20px] mobile-fly-in-left" style={{ animationDelay: '0.2s' }}>
           <a href="#" className="transition-transform hover:scale-110">
             <FaLinkedin size={24} color="#939393" />
           </a>
@@ -53,7 +53,7 @@ export default function Home() {
           </div>
           {/* Hamburger Icon - Below Logo and KMCQ GmbH */}
           <button 
-            className="text-white p-2 mt-2"
+            className="text-white p-2 mt-2 mobile-fly-in-right"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}

@@ -73,3 +73,35 @@ body {
   opacity: 0;
   animation: slideInFromLeft 5s ease-out forwards;
 }
+
+@keyframes flyInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flyInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mobile-fly-in-left {
+  opacity: 0;
+  animation: flyInFromLeft 0.5s ease-out forwards;
+}
+
+.mobile-fly-in-right {
+  opacity: 0;
+  animation: flyInFromRight 0.5s ease-out forwards;
+}
