@@ -155,13 +155,19 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 items-center justify-center">
+      <div className="flex flex-1 flex-col items-center justify-center">
         <h1 className="font-ubuntu text-white text-[35px] sm:text-[50px] md:text-[70px] font-bold text-center tracking-wide">
           <TypewriterText 
             text="Unlock Your Digital Future." 
             delay={3000}
           />
         </h1>
+        <p className="font-ubuntu text-white text-[21px] text-center mt-4">
+          <TypewriterText 
+            text="Seamless, Secure, Scalable Cloud Solutions." 
+            delay={5160}
+          />
+        </p>
       </div>
     </div>
   );
