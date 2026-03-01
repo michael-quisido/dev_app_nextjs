@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  margin: 0;
 }
 
 .network-canvas {
@@ -46,6 +47,12 @@ body {
 .fade-in-4s {
   opacity: 0;
   animation: fadeIn 4s ease-in-out forwards;
+}
+
+.fade-in-footer {
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
+  animation-delay: 5.2s;
 }
 
 @keyframes slideInFromLeft {
@@ -104,4 +111,12 @@ body {
 .mobile-fly-in-right {
   opacity: 0;
   animation: flyInFromRight 0.5s ease-out forwards;
+}
+
+.social-icon {
+  transition: filter 0.3s ease;
+}
+
+a:hover .social-icon {
+  filter: brightness(0) invert(1);
 }
