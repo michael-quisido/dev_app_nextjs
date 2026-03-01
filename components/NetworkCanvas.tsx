@@ -12,8 +12,8 @@ export default function NetworkCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width = canvas.clientWidth;
+    let height = canvas.clientHeight;
 
     canvas.width = width;
     canvas.height = height;
@@ -138,8 +138,8 @@ export default function NetworkCanvas() {
     };
 
     const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
       canvas.width = width;
       canvas.height = height;
       init();
