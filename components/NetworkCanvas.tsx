@@ -12,11 +12,25 @@ export default function NetworkCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = canvas.clientWidth;
-    let height = canvas.clientHeight;
+    let canvasWidth = window.innerWidth;
+    let canvasHeight = window.innerHeight;
 
-    canvas.width = width;
-    canvas.height = height;
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      
+      canvas.width = newWidth * dpr;
+      canvas.height = newHeight * dpr;
+      
+      canvasWidth = newWidth;
+      canvasHeight = newHeight;
+      
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    };
+
+    resizeCanvas();
 
     const nodes: any[] = [];
     const numNodes = 90;
@@ -57,8 +71,8 @@ export default function NetworkCanvas() {
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x + this.radius > width || this.x - this.radius < 0) this.vx *= -1;
-        if (this.y + this.radius > height || this.y - this.radius < 0) this.vy *= -1;
+        if (this.x + this.radius > canvasWidth || this.x - this.radius < 0) this.vx *= -1;
+        if (this.y + this.radius > canvasHeight || this.y - this.radius < 0) this.vy *= -1;
 
         if (mouseX !== null && mouseY !== null) {
           const dx = mouseX - this.x;
@@ -106,8 +120,8 @@ export default function NetworkCanvas() {
     function init() {
       nodes.length = 0;
       for (let i = 0; i < numNodes; i++) {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
+        const x = Math.random() * canvasWidth;
+        const y = Math.random() * canvasHeight;
         nodes.push(new Node(x, y));
       }
     }
@@ -115,7 +129,7 @@ export default function NetworkCanvas() {
     function animate() {
       requestAnimationFrame(animate);
       if (!ctx) return;
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       for (let i = 0; i < nodes.length; i++) {
         nodes[i].update();
@@ -137,12 +151,14 @@ export default function NetworkCanvas() {
       mouseY = null;
     };
 
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    
     const handleResize = () => {
-      width = canvas.clientWidth;
-      height = canvas.clientHeight;
-      canvas.width = width;
-      canvas.height = height;
-      init();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        resizeCanvas();
+        init();
+      }, 100);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -156,5 +172,13 @@ export default function NetworkCanvas() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="network-canvas" />;
+  return <canvas 
+    ref={canvasRef} 
+    className="network-canvas" 
+    style={{ 
+      display: 'block',
+      width: '100vw', 
+      height: '100vh' 
+    }} 
+  />;
 }
