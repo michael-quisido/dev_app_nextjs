@@ -60,6 +60,17 @@ body {
   animation-delay: 5.2s;
 }
 
+.hosting-col-77 {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .hosting-col-77 {
+    width: 40% !important;
+    flex: 0 0 40% !important;
+  }
+}
+
 @keyframes slideInFromLeft {
   from {
     opacity: 0;

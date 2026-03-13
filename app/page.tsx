@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import TypewriterText from "@/components/TypewriterText";
 import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaSearch, FaBars, FaTimes } from "react-icons/fa";
-import { MdSettings } from "react-icons/md";
+import { MdSettings, MdStorage, MdEmail } from "react-icons/md";
+import { SiWordpress } from "react-icons/si";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -296,6 +297,92 @@ export default function Home() {
             {gridState.titles[5] && <span style={{ color: '#191919', marginTop: '10px', textAlign: 'center', fontWeight: 'bold' }}><TypewriterText text="Cost Savings" delay={0} /></span>}
             {gridState.descriptions[5] && <div style={{ color: '#040f2d', marginTop: '10px', textAlign: 'left', fontSize: '14px' }}><TypewriterText text="Our AI-driven data cloud minimizes costly industrial downtime through predictive maintenance, optimizing resource allocation to deliver significant long-term savings across global manufacturing sites." delay={0} /></div>}
           </div>
+      </div>
+    </div>
+
+    {/* Products Section - Full Width */}
+    <div 
+      className="products-section w-full p-0 relative z-40" 
+      style={{ 
+        marginTop: '20px', 
+        marginBottom: '0px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0 -20px 0 0 #ffffff'
+      }}
+    >
+      <div className="flex flex-col items-center justify-center">
+        <span 
+          style={{ 
+            color: '#040f2d', 
+            fontSize: '37px', 
+            fontWeight: 'bold', 
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            textAlign: 'center'
+          }}
+        >
+          <TypewriterText text="Our Products" delay={1} />
+        </span>
+      </div>
+    </div>
+
+    {/* Hosting Services Section - Full Width */}
+    <div 
+      className="hosting-services-section w-full p-0 relative z-40" 
+      style={{ 
+        marginTop: '20px', 
+        marginBottom: '0px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0 -20px 0 0 #ffffff'
+      }}
+    >
+      <div className="flex flex-col md:flex-row" style={{ gap: '20px' }}>
+        {/* First Column - Image */}
+        <div className="w-full md:w-1/2 flex items-center justify-end flex-shrink-0">
+          <div style={{ height: 'auto', opacity: 0, animation: 'flyInFromLeft 1s ease-out forwards' }}>
+            <Image 
+              src="/cloud-infrastructure.png"
+              alt="Computing Infrastructure"
+              width={517}
+              height={0}
+              style={{ width: '517px', height: 'auto', borderRadius: '10px' }}
+            />
+          </div>
+        </div>
+        
+        {/* Second Column - Three Rows */}
+        <div className="hosting-col-77 flex flex-col" style={{ gap: '20px' }}>
+          {/* Row 1 - Data Web Hosting */}
+          <div className="flex items-center" style={{ padding: '25px', backgroundColor: '#ededed', borderRadius: '10px', borderTopWidth: '25px', borderBottomWidth: '25px', border: '1px solid black', opacity: 0, animation: 'flyInFromRight 1s ease-out forwards', marginTop: '20px', marginBottom: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25)' }}>
+            <MdStorage size={70} color="#040f2d" />
+            <span style={{ color: '#040f2d', fontSize: '24px', fontWeight: 'bold', marginLeft: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              Data Web Hosting
+            </span>
+          </div>
+          
+          {/* Row 2 - WordPress Hosting */}
+          <div className="flex items-center" style={{ padding: '25px', backgroundColor: '#ededed', borderRadius: '10px', borderTopWidth: '25px', borderBottomWidth: '25px', border: '1px solid black', opacity: 0, animation: 'flyInFromRight 1s ease-out forwards', animationDelay: '0.2s', marginTop: '20px', marginBottom: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25)' }}>
+            <SiWordpress size={70} color="#040f2d" />
+            <span style={{ color: '#040f2d', fontSize: '24px', fontWeight: 'bold', marginLeft: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              WordPress Hosting
+            </span>
+          </div>
+          
+          {/* Row 3 - Email Hosting */}
+          <div className="flex items-center" style={{ padding: '25px', backgroundColor: '#ededed', borderRadius: '10px', borderTopWidth: '25px', borderBottomWidth: '25px', border: '1px solid black', opacity: 0, animation: 'flyInFromRight 1s ease-out forwards', animationDelay: '0.4s', marginTop: '20px', marginBottom: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25)' }}>
+            <MdEmail size={70} color="#040f2d" />
+            <span style={{ color: '#040f2d', fontSize: '24px', fontWeight: 'bold', marginLeft: '15px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              Email Hosting
+            </span>
+          </div>
+        </div>
       </div>
     </div>
     </>
