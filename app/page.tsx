@@ -386,6 +386,35 @@ export default function Home() {
         </div>
       </div>
     </div>
+
+    {/* Reviews Section - Full Width */}
+    <div 
+      className="reviews-section w-full p-0 relative z-40" 
+      style={{ 
+        marginTop: '20px', 
+        marginBottom: '0px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#ffffff',
+        boxShadow: '0 -20px 0 0 #ffffff'
+      }}
+    >
+      <div className="flex flex-col items-center justify-center">
+        <span 
+          style={{ 
+            color: '#040f2d', 
+            fontSize: '37px', 
+            fontWeight: 'bold', 
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            textAlign: 'center'
+          }}
+        >
+          <TypewriterText text="Reviews" delay={1} />
+        </span>
+      </div>
+    </div>
     </>
   );
 }
