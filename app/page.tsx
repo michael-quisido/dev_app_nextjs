@@ -348,11 +348,12 @@ export default function Home() {
         <div className="w-full md:w-1/2 flex items-center justify-end flex-shrink-0">
           <div style={{ height: 'auto', opacity: 0, animation: 'flyInFromLeft 1s ease-out forwards' }}>
             <Image 
-              src="/cloud-infrastructure.png"
+              src="/cloud-infrastructure_b.png"
               alt="Computing Infrastructure"
               width={517}
               height={0}
               style={{ width: '517px', height: 'auto', borderRadius: '10px' }}
+              key="cloud-infra"
             />
           </div>
         </div>
