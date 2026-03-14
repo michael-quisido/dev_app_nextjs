@@ -321,7 +321,8 @@ export default function Home() {
             fontSize: '37px', 
             fontWeight: 'bold', 
             fontFamily: 'Arial, Helvetica, sans-serif',
-            textAlign: 'center'
+            textAlign: 'center',
+            textDecoration: 'underline'
           }}
         >
           <TypewriterText text="Our Products" delay={1} />
@@ -408,7 +409,8 @@ export default function Home() {
             fontSize: '37px', 
             fontWeight: 'bold', 
             fontFamily: 'Arial, Helvetica, sans-serif',
-            textAlign: 'center'
+            textAlign: 'center',
+            textDecoration: 'underline'
           }}
         >
           <TypewriterText text="Customer Reviews" delay={1} />
@@ -420,7 +422,7 @@ export default function Home() {
     <div 
       className="next-reviews-carousel w-full p-0 relative z-40"
       style={{ 
-        marginTop: '0px', 
+        marginTop: '-2px', 
         marginBottom: '0px', 
         paddingTop: '60px', 
         paddingBottom: '60px',
@@ -476,6 +478,7 @@ export default function Home() {
               style={{ 
                 minWidth: '677px', 
                 maxWidth: '677px',
+                marginLeft: '20px',
                 marginRight: '20px',
                 padding: '30px 35px',
                 backgroundColor: '#ffffff',
@@ -485,25 +488,25 @@ export default function Home() {
                 flexShrink: 0
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                <div style={{ position: 'relative', width: '35px', height: '35px', borderRadius: '50%', overflow: 'hidden', marginRight: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
+                <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden', marginRight: '15px' }}>
                   <Image 
                     src={`/reviews_images/${review.image}`}
                     alt={review.name}
-                    width={35}
-                    height={35}
+                    width={50}
+                    height={50}
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+                  <span style={{ color: '#FFD700', fontSize: '24px', lineHeight: '1' }}>★★★★★</span>
+                </div>
               </div>
-              <div style={{ marginBottom: '10px' }}>
-                <span style={{ color: '#FFD700', fontSize: '24px' }}>★★★★★★</span>
-              </div>
-              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', fontStyle: 'italic' }}>"{review.text}"</p>
+              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', marginTop: '20px', fontStyle: 'italic' }}>"{review.text}"</p>
               <div style={{ borderTop: '1px solid #eee', paddingTop: '12px' }}>
-                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: '600' }}>{review.role}</span>
-                <span style={{ color: '#888', fontSize: '13px', marginLeft: '8px' }}>{review.industry}</span>
+                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: 'bold', display: 'block' }}>{review.role}</span>
+                <span style={{ color: '#040f2d', fontSize: '13px', fontWeight: 'bold' }}>{review.industry}</span>
               </div>
             </div>
           ))}
@@ -523,6 +526,7 @@ export default function Home() {
               style={{ 
                 minWidth: '677px', 
                 maxWidth: '677px',
+                marginLeft: '20px',
                 marginRight: '20px',
                 padding: '30px 35px',
                 backgroundColor: '#ffffff',
@@ -532,25 +536,25 @@ export default function Home() {
                 flexShrink: 0
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                <div style={{ position: 'relative', width: '35px', height: '35px', borderRadius: '50%', overflow: 'hidden', marginRight: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
+                <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden', marginRight: '15px' }}>
                   <Image 
                     src={`/reviews_images/${review.image}`}
                     alt={review.name}
-                    width={35}
-                    height={35}
+                    width={50}
+                    height={50}
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+                  <span style={{ color: '#FFD700', fontSize: '24px', lineHeight: '1' }}>★★★★★</span>
+                </div>
               </div>
-              <div style={{ marginBottom: '10px' }}>
-                <span style={{ color: '#FFD700', fontSize: '24px' }}>★★★★★★</span>
-              </div>
-              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', fontStyle: 'italic' }}>"{review.text}"</p>
+              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', marginTop: '20px', fontStyle: 'italic' }}>"{review.text}"</p>
               <div style={{ borderTop: '1px solid #eee', paddingTop: '12px' }}>
-                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: '600' }}>{review.role}</span>
-                <span style={{ color: '#888', fontSize: '13px', marginLeft: '8px' }}>{review.industry}</span>
+                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: 'bold', display: 'block' }}>{review.role}</span>
+                <span style={{ color: '#040f2d', fontSize: '13px', fontWeight: 'bold' }}>{review.industry}</span>
               </div>
             </div>
           ))}
