@@ -411,8 +411,150 @@ export default function Home() {
             textAlign: 'center'
           }}
         >
-          <TypewriterText text="Reviews" delay={1} />
+          <TypewriterText text="Customer Reviews" delay={1} />
         </span>
+      </div>
+    </div>
+
+    {/* Next Reviews Carousel - Rotating Slide */}
+    <div 
+      className="next-reviews-carousel w-full p-0 relative z-40"
+      style={{ 
+        marginTop: '0px', 
+        marginBottom: '0px', 
+        paddingTop: '60px', 
+        paddingBottom: '60px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#ffffff',
+        overflow: 'hidden'
+      }}
+    >
+      <div className="carousel-container" style={{ 
+        display: 'flex', 
+        flexWrap: 'nowrap',
+        overflow: 'hidden',
+        width: '100%',
+        position: 'relative'
+      }}>
+        <style jsx>{`
+          @keyframes slideLeft {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-100%);
+            }
+          }
+          .carousel-track {
+            display: flex;
+            animation: slideLeft 120s linear infinite;
+          }
+          .carousel-track:hover {
+            animation-play-state: paused;
+          }
+          @media (max-width: 768px) {
+            .review-cell {
+              min-width: calc(100vw - 40px) !important;
+              max-width: calc(100vw - 40px) !important;
+            }
+          }
+        `}</style>
+        <div className="carousel-track">
+          {[
+            { name: "Michael Conson", image: "michael_conson.png", role: "Technical Support", industry: "Retail", text: "I moved my e-commerce site to their cloud hosting right before a holiday sale. The ability to scale CPU and RAM in one click was a lifesaver. Even with 5x my normal traffic, the site didn't lag for a second." },
+            { name: "Athon Sade", image: "blank.png", role: "Software Engineer", industry: "Industrial Technology", text: "I switched to KmcQ Cloud because of their 100% uptime SLA. It's been six months and we haven't had a single second of downtime. The geo-redundancy gives me peace of mind knowing our data is mirrored across multiple nodes." },
+            { name: "Jane Franzel", image: "blank.png", role: "Engineer", industry: "Financial Services", text: "The speed difference after migrating to a cloud environment was night and day. Our LCP (Largest Contentful Paint) improved by 40% immediately. The built-in CDN integration is just the icing on the cake." },
+            { name: "Fatima Rose", image: "fatima_rose.png", role: "Back End Engineer", industry: "Mining", text: "After outgrowing shared hosting, this VPS was the perfect next step. I love having dedicated RAM that isn't affected by other users. It's like having a dedicated server but at a fraction of the price." },
+            { name: "Jay Michael Cuerquis", image: "jay_michael.png", role: "Full Stack Engineer", industry: "Industrial Technology", text: "As a developer, I need full root access to configure my Nginx and Docker environment. This VPS gives me total control without the headache of managing physical hardware. Deployment was smooth and the IP assignment was instant." },
+            { name: "Mer Santiago", image: "blank.png", role: "FrontEnd BackEnd Engineer", industry: "Real Estate", text: "The performance-to-price ratio here is unbeatable. I'm running three high-traffic WordPress sites on a single mid-tier VPS, and they all load in under a second. Highly recommend their NVMe SSD plans." },
+            { name: "Albert Tupac", image: "albert_tupac.png", role: "FrontEnd BackEnd Engineer", industry: "Restaurants", text: "I was terrified of moving my site, but their migration team handled everything for free. They moved 50GB of data and several databases with zero downtime. It was completely seamless." }
+          ].map((review, index) => (
+            <div 
+              key={index}
+              className="review-cell"
+              style={{ 
+                minWidth: '677px', 
+                maxWidth: '677px',
+                marginRight: '20px',
+                padding: '30px 35px',
+                backgroundColor: '#ffffff',
+                borderRadius: '12px',
+                border: '1px solid #000000',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                flexShrink: 0
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                <div style={{ position: 'relative', width: '35px', height: '35px', borderRadius: '50%', overflow: 'hidden', marginRight: '12px' }}>
+                  <Image 
+                    src={`/reviews_images/${review.image}`}
+                    alt={review.name}
+                    width={35}
+                    height={35}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <span style={{ color: '#FFD700', fontSize: '24px' }}>★★★★★★</span>
+              </div>
+              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', fontStyle: 'italic' }}>"{review.text}"</p>
+              <div style={{ borderTop: '1px solid #eee', paddingTop: '12px' }}>
+                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: '600' }}>{review.role}</span>
+                <span style={{ color: '#888', fontSize: '13px', marginLeft: '8px' }}>{review.industry}</span>
+              </div>
+            </div>
+          ))}
+          {/* Duplicate for continuous loop */}
+          {[
+            { name: "Michael Conson", image: "michael_conson.png", role: "Technical Support", industry: "Retail", text: "I moved my e-commerce site to their cloud hosting right before a holiday sale. The ability to scale CPU and RAM in one click was a lifesaver. Even with 5x my normal traffic, the site didn't lag for a second." },
+            { name: "Athon Sade", image: "blank.png", role: "Software Engineer", industry: "Industrial Technology", text: "I switched to KmcQ Cloud because of their 100% uptime SLA. It's been six months and we haven't had a single second of downtime. The geo-redundancy gives me peace of mind knowing our data is mirrored across multiple nodes." },
+            { name: "Jane Franzel", image: "blank.png", role: "Engineer", industry: "Financial Services", text: "The speed difference after migrating to a cloud environment was night and day. Our LCP (Largest Contentful Paint) improved by 40% immediately. The built-in CDN integration is just the icing on the cake." },
+            { name: "Fatima Rose", image: "fatima_rose.png", role: "Back End Engineer", industry: "Mining", text: "After outgrowing shared hosting, this VPS was the perfect next step. I love having dedicated RAM that isn't affected by other users. It's like having a dedicated server but at a fraction of the price." },
+            { name: "Jay Michael Cuerquis", image: "jay_michael.png", role: "Full Stack Engineer", industry: "Industrial Technology", text: "As a developer, I need full root access to configure my Nginx and Docker environment. This VPS gives me total control without the headache of managing physical hardware. Deployment was smooth and the IP assignment was instant." },
+            { name: "Mer Santiago", image: "blank.png", role: "FrontEnd BackEnd Engineer", industry: "Real Estate", text: "The performance-to-price ratio here is unbeatable. I'm running three high-traffic WordPress sites on a single mid-tier VPS, and they all load in under a second. Highly recommend their NVMe SSD plans." },
+            { name: "Albert Tupac", image: "albert_tupac.png", role: "FrontEnd BackEnd Engineer", industry: "Restaurants", text: "I was terrified of moving my site, but their migration team handled everything for free. They moved 50GB of data and several databases with zero downtime. It was completely seamless." }
+          ].map((review, index) => (
+            <div 
+              key={`dup-${index}`}
+              className="review-cell"
+              style={{ 
+                minWidth: '677px', 
+                maxWidth: '677px',
+                marginRight: '20px',
+                padding: '30px 35px',
+                backgroundColor: '#ffffff',
+                borderRadius: '12px',
+                border: '1px solid #000000',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                flexShrink: 0
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                <div style={{ position: 'relative', width: '35px', height: '35px', borderRadius: '50%', overflow: 'hidden', marginRight: '12px' }}>
+                  <Image 
+                    src={`/reviews_images/${review.image}`}
+                    alt={review.name}
+                    width={35}
+                    height={35}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <span style={{ color: '#040f2d', fontSize: '18px', fontWeight: 'bold' }}>{review.name}</span>
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <span style={{ color: '#FFD700', fontSize: '24px' }}>★★★★★★</span>
+              </div>
+              <p style={{ color: '#555555', fontSize: '15px', lineHeight: '1.6', marginBottom: '15px', fontStyle: 'italic' }}>"{review.text}"</p>
+              <div style={{ borderTop: '1px solid #eee', paddingTop: '12px' }}>
+                <span style={{ color: '#040f2d', fontSize: '14px', fontWeight: '600' }}>{review.role}</span>
+                <span style={{ color: '#888', fontSize: '13px', marginLeft: '8px' }}>{review.industry}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
     </>
