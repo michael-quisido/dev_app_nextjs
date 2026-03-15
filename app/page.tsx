@@ -582,7 +582,7 @@ export default function Home() {
             fontWeight: 'bold', 
             fontFamily: 'Arial, Helvetica, sans-serif',
             textAlign: 'center',
-            textDecoration: 'underline'
+            textDecoration: 'none'
           }}
         >
           <TypewriterText text="Our Products" delay={1} />
@@ -673,7 +673,7 @@ export default function Home() {
             fontWeight: 'bold', 
             fontFamily: 'Arial, Helvetica, sans-serif',
             textAlign: 'center',
-            textDecoration: 'underline'
+            textDecoration: 'none'
           }}
         >
           <TypewriterText text="Customer Reviews" delay={1} />
@@ -846,7 +846,7 @@ export default function Home() {
             fontWeight: 'bold', 
             fontFamily: 'Arial, Helvetica, sans-serif',
             textAlign: 'center',
-            textDecoration: 'underline'
+            textDecoration: 'none'
           }}
         >
           <TypewriterText text="About Us" delay={1} />
