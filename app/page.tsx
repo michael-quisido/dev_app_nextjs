@@ -600,7 +600,10 @@ export default function Home() {
         paddingBottom: '40px',
         paddingLeft: '20px',
         paddingRight: '20px',
-        backgroundColor: '#ffffff',
+        backgroundImage: 'url("/background_images/bg1.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         boxShadow: '0 -20px 0 0 #ffffff'
       }}
     >
@@ -682,14 +685,14 @@ export default function Home() {
     <div 
       className="next-reviews-carousel w-full p-0 relative z-40"
       style={{ 
-        marginTop: '-2px', 
+        marginTop: '20px', 
         marginBottom: '0px', 
-        paddingTop: '60px', 
-        paddingBottom: '60px',
+        paddingTop: '40px', 
+        paddingBottom: '40px',
         paddingLeft: '20px',
         paddingRight: '20px',
         backgroundColor: '#ffffff',
-        overflow: 'hidden'
+        boxShadow: '0 -20px 0 0 #ffffff'
       }}
     >
       <div className="carousel-container" style={{ 
@@ -861,7 +864,10 @@ export default function Home() {
         paddingBottom: '40px',
         paddingLeft: '40px',
         paddingRight: '40px',
-        backgroundColor: '#ffffff'
+        backgroundImage: 'url("/background_images/bg2.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
       }}
     >
       <style jsx>{`
