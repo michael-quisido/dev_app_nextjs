@@ -12,6 +12,266 @@ export default function Home() {
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const globeCanvas = document.getElementById('hero-globe-canvas') as HTMLCanvasElement | null;
+    const particleCanvas = document.getElementById('particle-network') as HTMLCanvasElement | null;
+
+    if (!globeCanvas || !particleCanvas) return;
+
+    const globeCtx = globeCanvas.getContext('2d');
+    const particleCtx = particleCanvas.getContext('2d');
+
+    if (!globeCtx || !particleCtx) return;
+
+    let currentPhase = 0;
+    let phaseStartTime = Date.now();
+    let animationFrame: number;
+
+    const config = {
+      phases: [
+        { duration: 3000, name: 'globe-limited', text: 'Limited Capacity: 3 Regions', globeOpacity: 1.0, particleMode: 'globe', activeLocations: 3, particleCount: 50 },
+        { duration: 5000, name: 'globe-expansion', text: '200+ Global Regions', globeOpacity: 1.0, particleMode: 'globe', activeLocations: 200, particleCount: 100 },
+        { duration: 7000, name: 'network-expand', text: 'Elastic: 1 → 4,000 GPUs', globeOpacity: 0.3, particleMode: 'network', activeLocations: 200, particleCount: 150 },
+        { duration: 6000, name: 'network-reform', text: 'Always Available. Everywhere.', globeOpacity: 1.0, particleMode: 'reform', activeLocations: 200, particleCount: 100 }
+      ],
+      globe: { radius: 120, rotationSpeed: 0.0003, locationCount: 200, pulseSpeed: 0.03 },
+      colors: { primary: '#040f2d', light: '#040f2d', accent: '#040f2d', inactive: 'rgba(4, 15, 45, 0.3)', active: 'rgba(4, 15, 45, 0.9)', glow: 'rgba(4, 15, 45, 0.5)' },
+      transition: { duration: 2000 }
+    };
+
+    const globe: { rotation: number; locations: { theta: number; phi: number; active: boolean; pulse: number; baseRadius: number }[]; opacity: number } = { rotation: 0, locations: [], opacity: 1.0 };
+    let particles: { theta: number; phi: number; radius: number; targetTheta: number; targetPhi: number; targetRadius: number; networkX: number; networkY: number; networkVx: number; networkVy: number; size: number; opacity: number; pulse: number }[] = [];
+
+    const resize = () => {
+      const container = globeCanvas.parentElement;
+      if (!container) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      globeCanvas.width = width;
+      globeCanvas.height = height;
+      particleCanvas.width = width;
+      particleCanvas.height = height;
+    };
+
+    const generateGlobeLocations = () => {
+      const locations: { theta: number; phi: number; active: boolean; pulse: number; baseRadius: number }[] = [];
+      const count = config.globe.locationCount;
+      const goldenRatio = (1 + Math.sqrt(5)) / 2;
+      for (let i = 0; i < count; i++) {
+        const theta = 2 * Math.PI * i / goldenRatio;
+        const phi = Math.acos(1 - 2 * (i + 0.5) / count);
+        locations.push({ theta, phi, active: false, pulse: Math.random() * Math.PI * 2, baseRadius: config.globe.radius });
+      }
+      globe.locations = locations;
+    };
+
+    const createParticles = () => {
+      particles = [];
+      const count = config.phases[0].particleCount;
+      const radius = config.globe.radius;
+      for (let i = 0; i < count; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        particles.push({
+          theta, phi, radius, targetTheta: theta, targetPhi: phi, targetRadius: radius,
+          networkX: 0, networkY: 0, networkVx: 0, networkVy: 0,
+          size: Math.random() * 2.5 + 1.5, opacity: Math.random() * 0.5 + 0.5, pulse: Math.random() * Math.PI * 2
+        });
+      }
+    };
+
+    const updatePhase = () => {
+      const elapsed = Date.now() - phaseStartTime;
+      const currentPhaseConfig = config.phases[currentPhase];
+
+      if (elapsed > currentPhaseConfig.duration) {
+        currentPhase = (currentPhase + 1) % config.phases.length;
+        phaseStartTime = Date.now();
+        const newPhase = config.phases[currentPhase];
+        
+        if (newPhase.particleCount > particles.length) {
+          for (let i = 0; i < newPhase.particleCount - particles.length; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            particles.push({
+              theta, phi, radius: config.globe.radius, targetTheta: theta, targetPhi: phi, targetRadius: config.globe.radius,
+              networkX: 0, networkY: 0, networkVx: 0, networkVy: 0,
+              size: Math.random() * 2.5 + 1.5, opacity: 0, pulse: Math.random() * Math.PI * 2
+            });
+          }
+        } else {
+          particles = particles.slice(0, newPhase.particleCount);
+        }
+
+        const radius = config.globe.radius;
+        particles.forEach(particle => {
+          if (newPhase.particleMode === 'globe' || newPhase.particleMode === 'reform') {
+            particle.targetRadius = radius;
+          } else if (newPhase.particleMode === 'network') {
+            particle.targetRadius = radius * (1.5 + Math.random() * 0.8);
+            particle.networkVx = (Math.random() - 0.5) * 0.3;
+            particle.networkVy = (Math.random() - 0.5) * 0.3;
+          }
+        });
+      }
+    };
+
+    const drawGlobe = () => {
+      const radius = config.globe.radius;
+      const currentPhaseConfig = config.phases[currentPhase];
+
+      globeCtx.clearRect(0, 0, globeCanvas.width, globeCanvas.height);
+
+      const targetOpacity = currentPhaseConfig.globeOpacity;
+      globe.opacity += (targetOpacity - globe.opacity) * 0.05;
+
+      globeCtx.strokeStyle = `rgba(4, 15, 45, ${0.15 * globe.opacity})`;
+      globeCtx.lineWidth = 1;
+
+      for (let lat = -80; lat <= 80; lat += 20) {
+        globeCtx.beginPath();
+        for (let lon = 0; lon <= 360; lon += 5) {
+          const phi = (90 - lat) * Math.PI / 180;
+          const theta = (lon + globe.rotation * 180 / Math.PI) * Math.PI / 180;
+          const x = radius * Math.sin(phi) * Math.cos(theta);
+          const y = radius * Math.cos(phi);
+          const z = radius * Math.sin(phi) * Math.sin(theta);
+          if (z > 0) {
+            const screenX = globeCanvas.width / 2 + x;
+            const screenY = globeCanvas.height / 2 + y;
+            if (lon === 0) globeCtx.moveTo(screenX, screenY);
+            else globeCtx.lineTo(screenX, screenY);
+          }
+        }
+        globeCtx.stroke();
+      }
+
+      for (let lon = 0; lon < 360; lon += 20) {
+        globeCtx.beginPath();
+        for (let lat = -90; lat <= 90; lat += 5) {
+          const phi = (90 - lat) * Math.PI / 180;
+          const theta = (lon + globe.rotation * 180 / Math.PI) * Math.PI / 180;
+          const x = radius * Math.sin(phi) * Math.cos(theta);
+          const y = radius * Math.cos(phi);
+          const z = radius * Math.sin(phi) * Math.sin(theta);
+          if (z > 0) {
+            const screenX = globeCanvas.width / 2 + x;
+            const screenY = globeCanvas.height / 2 + y;
+            if (lat === -90) globeCtx.moveTo(screenX, screenY);
+            else globeCtx.lineTo(screenX, screenY);
+          }
+        }
+        globeCtx.stroke();
+      }
+
+      const activeCount = currentPhaseConfig.activeLocations;
+      globe.locations.forEach((loc, index) => {
+        const theta = loc.theta + globe.rotation;
+        const phi = loc.phi;
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.cos(phi);
+        const z = radius * Math.sin(phi) * Math.sin(theta);
+        if (z > 0) {
+          const screenX = globeCanvas.width / 2 + x;
+          const screenY = globeCanvas.height / 2 + y;
+          const isActive = index < activeCount;
+          loc.pulse += config.globe.pulseSpeed;
+          const pulseAlpha = isActive ? 0.6 + Math.sin(loc.pulse) * 0.4 : 0.3 + Math.sin(loc.pulse) * 0.2;
+          globeCtx.beginPath();
+          globeCtx.arc(screenX, screenY, isActive ? 3 : 2, 0, Math.PI * 2);
+          globeCtx.fillStyle = `rgba(4, 15, 45, ${pulseAlpha * globe.opacity})`;
+          if (isActive) { globeCtx.shadowBlur = 10; globeCtx.shadowColor = config.colors.glow; }
+          else { globeCtx.shadowBlur = 4; globeCtx.shadowColor = config.colors.glow; }
+          globeCtx.fill();
+          globeCtx.shadowBlur = 0;
+        }
+      });
+
+      globe.rotation += config.globe.rotationSpeed;
+    };
+
+    const drawParticles = () => {
+      const currentPhaseConfig = config.phases[currentPhase];
+      particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+      particles.forEach(particle => {
+        particle.radius += (particle.targetRadius - particle.radius) * 0.05;
+        particle.pulse += 0.05;
+        if (particle.opacity < 1) particle.opacity += 0.02;
+
+        let screenX, screenY, isVisible;
+
+        if (currentPhaseConfig.particleMode === 'network') {
+          const sphericalX = particle.radius * Math.sin(particle.phi) * Math.cos(particle.theta + globe.rotation);
+          const sphericalY = particle.radius * Math.cos(particle.phi);
+          particle.networkX += particle.networkVx;
+          particle.networkY += particle.networkVy;
+          screenX = particleCanvas.width / 2 + sphericalX + particle.networkX;
+          screenY = particleCanvas.height / 2 + sphericalY + particle.networkY;
+          isVisible = true;
+        } else {
+          particle.networkX *= 0.95;
+          particle.networkY *= 0.95;
+          const theta = particle.theta + globe.rotation;
+          const x = particle.radius * Math.sin(particle.phi) * Math.cos(theta);
+          const y = particle.radius * Math.cos(particle.phi);
+          const z = particle.radius * Math.sin(particle.phi) * Math.sin(theta);
+          screenX = particleCanvas.width / 2 + x;
+          screenY = particleCanvas.height / 2 + y;
+          isVisible = z > 0;
+        }
+
+        if (isVisible) {
+          const pulseSize = particle.size * (1 + Math.sin(particle.pulse) * 0.2);
+          particleCtx.beginPath();
+          particleCtx.arc(screenX, screenY, pulseSize, 0, Math.PI * 2);
+          particleCtx.fillStyle = `rgba(4, 15, 45, ${particle.opacity * 0.8})`;
+          particleCtx.shadowBlur = 6;
+          particleCtx.shadowColor = config.colors.glow;
+          particleCtx.fill();
+          particleCtx.shadowBlur = 0;
+        }
+      });
+
+      if (currentPhaseConfig.particleMode === 'network') {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = (particleCanvas.width / 2 + particles[i].radius * Math.sin(particles[i].phi) * Math.cos(particles[i].theta + globe.rotation) + particles[i].networkX) - (particleCanvas.width / 2 + particles[j].radius * Math.sin(particles[j].phi) * Math.cos(particles[j].theta + globe.rotation) + particles[j].networkX);
+            const dy = (particleCanvas.height / 2 + particles[j].radius * Math.cos(particles[j].phi) + particles[j].networkY) - (particleCanvas.height / 2 + particles[i].radius * Math.cos(particles[i].phi) + particles[i].networkY);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 100) {
+              particleCtx.beginPath();
+              particleCtx.moveTo(particleCanvas.width / 2 + particles[i].radius * Math.sin(particles[i].phi) * Math.cos(particles[i].theta + globe.rotation) + particles[i].networkX, particleCanvas.height / 2 + particles[i].radius * Math.cos(particles[i].phi) + particles[i].networkY);
+              particleCtx.lineTo(particleCanvas.width / 2 + particles[j].radius * Math.sin(particles[j].phi) * Math.cos(particles[j].theta + globe.rotation) + particles[j].networkX, particleCanvas.height / 2 + particles[j].radius * Math.cos(particles[j].phi) + particles[j].networkY);
+              particleCtx.strokeStyle = `rgba(4, 15, 45, ${(1 - distance / 100) * 0.2})`;
+              particleCtx.lineWidth = 1;
+              particleCtx.stroke();
+            }
+          }
+        }
+      }
+    };
+
+    const animate = () => {
+      updatePhase();
+      drawGlobe();
+      drawParticles();
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    resize();
+    generateGlobeLocations();
+    createParticles();
+    animate();
+
+    window.addEventListener('resize', resize);
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, []);
   const [gridState, setGridState] = useState({
     isVisible: false,
     icons: [false, false, false, false, false, false],
@@ -558,6 +818,95 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+
+    {/* About Us Section */}
+    <div 
+      className="about-us-section w-full p-0 relative z-40"
+      style={{ 
+        marginTop: '0px', 
+        marginBottom: '0px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#ffffff'
+      }}
+    >
+      <div className="flex flex-col items-center justify-center">
+        <span 
+          style={{ 
+            color: '#040f2d', 
+            fontSize: '37px', 
+            fontWeight: 'bold', 
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            textAlign: 'center',
+            textDecoration: 'underline'
+          }}
+        >
+          <TypewriterText text="About Us" delay={1} />
+        </span>
+      </div>
+    </div>
+
+    {/* About Details Section */}
+    <div 
+      className="about-details-section w-full p-0 relative z-40"
+      style={{ 
+        marginTop: '0px', 
+        marginBottom: '0px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px',
+        paddingLeft: '40px',
+        paddingRight: '40px',
+        backgroundColor: '#ffffff'
+      }}
+    >
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .about-details-container {
+            flex-direction: column !important;
+          }
+          .about-details-first-col {
+            width: 100% !important;
+          }
+          .about-details-second-col {
+            width: 100% !important;
+          }
+        }
+      `}</style>
+      <div className="about-details-container" style={{ display: 'flex', flexDirection: 'row', gap: '40px', justifyContent: 'flex-end', alignItems: 'center' }}>
+        {/* First Column */}
+        <div className="about-details-first-col" style={{ width: '40%', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'flex-end' }}>
+          {/* First Row */}
+          <div style={{ padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px', width: '100%' }}>
+            <p style={{ color: '#040f2d', fontSize: '15px', lineHeight: '1.8', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              <TypewriterText text="KMCQ GmbH, headquartered in Cebu, Philippines, has specialized in open-source industrial technology for 15 years. We believe secure, free communication is the foundation of progress; it has been our core source code for decades. As premier Linux experts, we provide professional, eye-level partnership to companies, the public sector, and individuals. By navigating diverse business landscapes, KMCQ GmbH enables customers to reclaim their digital sovereignty and maintain complete control over their essential technical infrastructure and data." delay={0} />
+            </p>
+          </div>
+          {/* Second Row */}
+          <div style={{ padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px' }}>
+            <p style={{ color: '#040f2d', fontSize: '15px', lineHeight: '1.8', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              <strong>Mission:</strong><br /><br />
+              <TypewriterText text="To empower the global developer community by engineering high-performance cloud infrastructure and flexible VPS solutions that eliminate technical barriers, allowing creators to deploy, manage, and scale their most ambitious digital projects with absolute speed, precision, and unwavering reliability in an ever-evolving technological landscape." delay={1000} />
+            </p>
+          </div>
+          {/* Third Row */}
+          <div style={{ padding: '20px', backgroundColor: '#ffffff', borderRadius: '8px' }}>
+            <p style={{ color: '#040f2d', fontSize: '15px', lineHeight: '1.8', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              <strong>Vision:</strong><br /><br />
+              <TypewriterText text="To become the world's most trusted foundation for digital transformation, where seamless connectivity and sophisticated server architecture converge to inspire a future where every business, regardless of size, possesses the computational power and creative freedom to redefine what is possible on the modern web." delay={2000} />
+            </p>
+          </div>
+        </div>
+        {/* Second Column */}
+        <div className="about-details-second-col" style={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px' }}>
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <canvas id="hero-globe-canvas" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+            <canvas id="particle-network" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+          </div>
         </div>
       </div>
     </div>
