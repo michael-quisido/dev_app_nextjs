@@ -864,7 +864,7 @@ export default function Home() {
         paddingBottom: '40px',
         paddingLeft: '40px',
         paddingRight: '40px',
-        backgroundImage: 'url("/background_images/bg2.jpg")',
+        backgroundImage: 'url("/background_images/aboutus_section_bg.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
