@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaSearch } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { useState } from "react";
 
 export default function PageLayout({ children, title }: { children: React.ReactNode; title?: string }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
 
   return (
@@ -92,6 +93,22 @@ export default function PageLayout({ children, title }: { children: React.ReactN
 
         {/* Mobile Header */}
         <div className="md:hidden flex flex-col">
+          {/* Social Icons - Top Right */}
+          <div className="flex items-center justify-end gap-3 pr-[20px]">
+            <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
+              <FaLinkedin size={24} color="#939393" />
+            </a>
+            <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
+              <FaFacebook size={24} color="#939393" />
+            </a>
+            <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
+              <FaInstagram size={24} color="#939393" />
+            </a>
+            <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
+              <FaYoutube size={24} color="#939393" />
+            </a>
+          </div>
+          {/* Logo + KMCQ GmbH - Left Side + Hamburger - Right Side */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 pl-[5px]">
               <Image
@@ -108,32 +125,28 @@ export default function PageLayout({ children, title }: { children: React.ReactN
                 KMCQ GmbH
               </span>
             </div>
-            <div className="flex items-center gap-3 pr-[20px]">
-              <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
-                <FaLinkedin size={24} color="#939393" />
-              </a>
-              <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
-                <FaFacebook size={24} color="#939393" />
-              </a>
-              <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
-                <FaInstagram size={24} color="#939393" />
-              </a>
-              <a href="#" className="transition-transform hover:scale-110" style={{ display: 'flex' }}>
-                <FaYoutube size={24} color="#939393" />
-              </a>
+            <button 
+              className="text-white p-2 mr-[15px]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="flex flex-col items-end mt-4 space-y-4 z-50 pr-[20px]">
+              {menuItems.map((item) => (
+                <Link
+                  key={item}
+                  href={item === "Home" ? "/" : item === "About Us" ? "/about" : `/${item.toLowerCase().replace(" ", "-")}`}
+                  className="font-ubuntu text-[20px] text-white hover:text-gray-300"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item}
+                </Link>
+              ))}
             </div>
-          </div>
-          <div className="flex items-center gap-[5px] pl-[20px] pt-[10px] flex-wrap">
-            {menuItems.map((item) => (
-              <Link
-                key={item}
-                href={item === "Home" ? "/" : item === "About Us" ? "/about" : `/${item.toLowerCase().replace(" ", "-")}`}
-                className="font-ubuntu text-[14px] text-white hover:text-gray-300 px-2 py-1"
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
+          )}
         </div>
       </div>
 
@@ -230,7 +243,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
         {/* Second Row - Three Columns */}
         <div className="footer-second-row" style={{ display: 'flex', flexDirection: 'row', gap: '40px', borderTop: '1px solid #1a2a4d', paddingTop: '30px', paddingLeft: '20px', paddingRight: '20px' }}>
           {/* First Column */}
-          <div style={{ flex: 1, padding: '20px', paddingLeft: '50px' }}>
+          <div style={{ flex: 1.1, padding: '20px', paddingLeft: '50px' }}>
             <Link href="/" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px', textDecoration: 'none' }}>
               <Image 
                 src="/kmcq-cloud-company-white-logo.png"
@@ -250,7 +263,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
             </div>
           </div>
           {/* Second Column - Empty */}
-          <div className="footer-second-col-empty" style={{ flex: 1 }}></div>
+          <div className="footer-second-col-empty" style={{ flex: 0.9 }}></div>
           {/* Third Column - Social Media */}
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '20px', padding: '20px', paddingRight: '50px' }}>
             <Link href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-link"><SiGithub size={24} color="#9d9d9d" /></Link>

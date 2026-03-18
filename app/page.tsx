@@ -343,9 +343,9 @@ export default function Home() {
             <FaYoutube size={24} color="#939393" className="social-icon" />
           </a>
         </div>
-        {/* Logo + KMCQ GmbH - Left Side */}
-        <div className="flex flex-col items-start pl-[5px]">
-          <div className="flex items-center gap-2">
+        {/* Logo + KMCQ GmbH - Left Side + Hamburger - Right Side */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 pl-[5px]">
             <div className="fade-in-3s">
               <Image
                 src="/kmcq-cloud-company-white-logo.png"
@@ -364,16 +364,15 @@ export default function Home() {
               delay={2000}
             />
           </div>
-          {/* Hamburger Icon - Below Logo and KMCQ GmbH */}
           <button 
-            className="text-white p-2 mt-2 mobile-fly-in-right"
+            className="text-white p-2 mr-[15px]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
         {mobileMenuOpen && (
-          <div className="flex flex-col items-start mt-4 space-y-4 z-50">
+          <div className="flex flex-col items-end mt-4 space-y-4 z-50 pr-[20px]">
             {menuItems.map((item) => (
               <Link
                 key={item}
@@ -1006,7 +1005,7 @@ export default function Home() {
       {/* Second Row - Three Columns */}
       <div className="footer-second-row" style={{ display: 'flex', flexDirection: 'row', gap: '40px', borderTop: '1px solid #1a2a4d', paddingTop: '30px', paddingLeft: '20px', paddingRight: '20px' }}>
         {/* First Column */}
-        <div style={{ flex: 1, padding: '20px', paddingLeft: '50px' }}>
+        <div style={{ flex: 1.1, padding: '20px', paddingLeft: '50px' }}>
           <Link href="/" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px', textDecoration: 'none' }}>
             <Image 
               src="/kmcq-cloud-company-white-logo.png"
@@ -1026,7 +1025,7 @@ export default function Home() {
           </div>
         </div>
         {/* Second Column - Empty */}
-        <div className="footer-second-col-empty" style={{ flex: 1 }}></div>
+        <div className="footer-second-col-empty" style={{ flex: 0.9 }}></div>
         {/* Third Column - Social Media */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '20px', padding: '20px', paddingRight: '50px' }}>
           <Link href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-link"><SiGithub size={24} color="#9d9d9d" /></Link>
