@@ -259,7 +259,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
               <span style={{ color: '#9d9d9d', fontSize: '14px' }}>569 A. Apostol St. Brgy. Tungkop, Minglanilla, Central Visayas, Cebu 6046</span>
               <span style={{ color: '#9d9d9d', fontSize: '14px' }}>+639171229475</span>
               <span style={{ color: '#9d9d9d', fontSize: '14px' }}>support@kmcq.com</span>
-              <span style={{ color: '#9d9d9d', fontSize: '14px', marginTop: '5px' }}><Link href="/terms" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Terms of Use</Link> | <Link href="/policy" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Policy</Link></span>
+              <span style={{ color: '#9d9d9d', fontSize: '14px' }}><Link href="/terms" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Terms of Use</Link> | <Link href="/policy" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Policy</Link></span>
             </div>
           </div>
           {/* Second Column - Empty */}

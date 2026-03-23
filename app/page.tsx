@@ -7,12 +7,14 @@ import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaSearch, FaBars, FaTim
 import { SiGithub } from "react-icons/si";
 import { MdSettings, MdStorage, MdEmail } from "react-icons/md";
 import { SiWordpress } from "react-icons/si";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [carouselState, setCarouselState] = useState<'left' | 'right' | 'paused'>('left');
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const globeCanvas = document.getElementById('hero-globe-canvas') as HTMLCanvasElement | null;
@@ -683,7 +685,25 @@ export default function Home() {
 
     {/* Next Reviews Carousel - Rotating Slide */}
     <div 
+      ref={carouselRef}
       className="next-reviews-carousel w-full p-0 relative z-40"
+      onMouseEnter={() => setCarouselState('paused')}
+      onMouseLeave={() => setCarouselState('left')}
+      onMouseMove={(e) => {
+        if (!carouselRef.current) return;
+        const rect = carouselRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const width = rect.width;
+        const leftPercent = (x / width) * 100;
+        
+        if (leftPercent < 40) {
+          setCarouselState('right');
+        } else if (leftPercent > 60) {
+          setCarouselState('left');
+        } else {
+          setCarouselState('paused');
+        }
+      }}
       style={{ 
         marginTop: '20px', 
         marginBottom: '0px', 
@@ -711,11 +731,22 @@ export default function Home() {
               transform: translateX(-100%);
             }
           }
+          @keyframes slideRight {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(0);
+            }
+          }
           .carousel-track {
             display: flex;
             animation: slideLeft 120s linear infinite;
           }
-          .carousel-track:hover {
+          .carousel-track.direction-right {
+            animation-direction: reverse;
+          }
+          .carousel-track.paused {
             animation-play-state: paused;
           }
           @media (max-width: 768px) {
@@ -725,7 +756,9 @@ export default function Home() {
             }
           }
         `}</style>
-        <div className="carousel-track">
+        <div 
+          className={`carousel-track ${carouselState === 'right' ? 'direction-right' : ''} ${carouselState === 'paused' ? 'paused' : ''}`}
+        >
           {[
             { name: "Michael Conson", image: "michael_conson.png", role: "Technical Support", industry: "Retail", text: "I moved my e-commerce site to their cloud hosting right before a holiday sale. The ability to scale CPU and RAM in one click was a lifesaver. Even with 5x my normal traffic, the site didn't lag for a second." },
             { name: "Athon Sade", image: "blank.png", role: "Software Engineer", industry: "Industrial Technology", text: "I switched to KmcQ Cloud because of their 100% uptime SLA. It's been six months and we haven't had a single second of downtime. The geo-redundancy gives me peace of mind knowing our data is mirrored across multiple nodes." },
@@ -1021,7 +1054,7 @@ export default function Home() {
             <span style={{ color: '#9d9d9d', fontSize: '14px' }}>569 A. Apostol St. Brgy. Tungkop, Minglanilla, Central Visayas, Cebu 6046</span>
             <span style={{ color: '#9d9d9d', fontSize: '14px' }}>+639171229475</span>
             <span style={{ color: '#9d9d9d', fontSize: '14px' }}>support@kmcq.com</span>
-            <span style={{ color: '#9d9d9d', fontSize: '14px', marginTop: '5px' }}><Link href="/terms" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Terms of Use</Link> | <Link href="/policy" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Policy</Link></span>
+            <span style={{ color: '#9d9d9d', fontSize: '14px' }}><Link href="/terms" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Terms of Use</Link> | <Link href="/policy" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ color: '#9d9d9d', textDecoration: 'none' }}>Policy</Link></span>
           </div>
         </div>
         {/* Second Column - Empty */}
