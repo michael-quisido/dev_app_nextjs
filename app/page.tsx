@@ -13,8 +13,43 @@ export default function Home() {
   const menuItems = ["Home", "Products", "Reviews", "Blog", "About Us"];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [carouselState, setCarouselState] = useState<'left' | 'right' | 'paused'>('left');
+  const [carouselDirection, setCarouselDirection] = useState<'left' | 'right' | 'paused'>('left');
+  const [carouselPosition, setCarouselPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselTrackRef = useRef<HTMLDivElement>(null);
+  const positionRef = useRef(0);
+  const directionRef = useRef<'left' | 'right' | 'paused'>('left');
+  const lastTimeRef = useRef(0);
+  const requestRef = useRef<number>(0);
+
+  const animate = (time: number) => {
+    if (lastTimeRef.current === 0) {
+      lastTimeRef.current = time;
+    }
+    
+    const deltaTime = time - lastTimeRef.current;
+    lastTimeRef.current = time;
+    
+    if (directionRef.current === 'left') {
+      positionRef.current = (positionRef.current + (deltaTime / 120000)) % 1;
+    } else if (directionRef.current === 'right') {
+      positionRef.current = Math.max(0, positionRef.current - (deltaTime / 120000));
+    }
+    
+    setCarouselPosition(positionRef.current);
+    requestRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    directionRef.current = carouselDirection;
+  }, [carouselDirection]);
 
   useEffect(() => {
     const globeCanvas = document.getElementById('hero-globe-canvas') as HTMLCanvasElement | null;
@@ -687,8 +722,8 @@ export default function Home() {
     <div 
       ref={carouselRef}
       className="next-reviews-carousel w-full p-0 relative z-40"
-      onMouseEnter={() => setCarouselState('paused')}
-      onMouseLeave={() => setCarouselState('left')}
+      onMouseEnter={() => setCarouselDirection('paused')}
+      onMouseLeave={() => setCarouselDirection('left')}
       onMouseMove={(e) => {
         if (!carouselRef.current) return;
         const rect = carouselRef.current.getBoundingClientRect();
@@ -697,11 +732,11 @@ export default function Home() {
         const leftPercent = (x / width) * 100;
         
         if (leftPercent < 40) {
-          setCarouselState('right');
+          setCarouselDirection('right');
         } else if (leftPercent > 60) {
-          setCarouselState('left');
+          setCarouselDirection('left');
         } else {
-          setCarouselState('paused');
+          setCarouselDirection('paused');
         }
       }}
       style={{ 
@@ -723,31 +758,9 @@ export default function Home() {
         position: 'relative'
       }}>
         <style jsx>{`
-          @keyframes slideLeft {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-          @keyframes slideRight {
-            0% {
-              transform: translateX(-100%);
-            }
-            100% {
-              transform: translateX(0);
-            }
-          }
           .carousel-track {
             display: flex;
-            animation: slideLeft 120s linear infinite;
-          }
-          .carousel-track.direction-right {
-            animation-direction: reverse;
-          }
-          .carousel-track.paused {
-            animation-play-state: paused;
+            will-change: transform;
           }
           @media (max-width: 768px) {
             .review-cell {
@@ -757,7 +770,12 @@ export default function Home() {
           }
         `}</style>
         <div 
-          className={`carousel-track ${carouselState === 'right' ? 'direction-right' : ''} ${carouselState === 'paused' ? 'paused' : ''}`}
+          ref={carouselTrackRef}
+          className="carousel-track"
+          style={{
+            transform: `translateX(-${carouselPosition * 100}%)`,
+            transition: 'transform 0.1s linear'
+          }}
         >
           {[
             { name: "Michael Conson", image: "michael_conson.png", role: "Technical Support", industry: "Retail", text: "I moved my e-commerce site to their cloud hosting right before a holiday sale. The ability to scale CPU and RAM in one click was a lifesaver. Even with 5x my normal traffic, the site didn't lag for a second." },
