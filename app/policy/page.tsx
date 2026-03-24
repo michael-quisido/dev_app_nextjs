@@ -1,39 +1,46 @@
 import PageLayout from "@/components/PageLayout";
+import Image from "next/image";
 
 export default function Page() {
   return (
     <PageLayout title="Privacy Policy">
       <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        padding: '40px'
+        minHeight: '60vh',
+        width: '100%'
       }}>
         <div style={{ 
-          backgroundColor: 'rgba(4, 15, 45, 0.9)', 
-          padding: '60px', 
-          borderRadius: '20px',
-          textAlign: 'center',
-          maxWidth: '800px',
-          width: '100%'
+          width: '100%',
+          position: 'relative'
         }}>
-          <h1 style={{ 
-            color: '#ffffff', 
-            fontSize: '48px', 
-            fontWeight: 'bold',
-            marginBottom: '20px',
-            fontFamily: 'Arial, Helvetica, sans-serif'
+          <Image
+            src="/header_images/tazz.jpg"
+            alt="Policy Header"
+            width={1920}
+            height={600}
+            sizes="100vw"
+            unoptimized
+            style={{ 
+              width: '100%', 
+              height: 'auto'
+            }}
+          />
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '30px',
+            transform: 'translateY(-50%)',
+            textAlign: 'left'
           }}>
-            Privacy Policy
-          </h1>
-          <p style={{ 
-            color: '#9d9d9d', 
-            fontSize: '18px',
-            lineHeight: '1.8',
-            fontFamily: 'Arial, Helvetica, sans-serif'
-          }}>
-            Your privacy is important to us. This policy outlines how we collect, use, and protect your personal information.
-          </p>
+            <h1 style={{ 
+              color: '#ffffff', 
+              fontSize: 'clamp(20px, 5vw, 37px)', 
+              fontWeight: 'bold',
+              fontFamily: 'Arial, Helvetica, sans-serif',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+            }}>
+              Our Policy
+            </h1>
+          </div>
         </div>
       </div>
     </PageLayout>

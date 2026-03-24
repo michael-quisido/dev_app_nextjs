@@ -151,7 +151,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
       </div>
 
       {/* Main Content */}
-      <div style={{ minHeight: '60vh', padding: '40px 20px' }}>
+      <div style={{ minHeight: '60vh', padding: '15px 0 0 0' }}>
         {children}
       </div>
 
