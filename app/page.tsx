@@ -413,7 +413,7 @@ export default function Home() {
             {menuItems.map((item) => (
               <Link
                 key={item}
-                href="#"
+                href={item === "Home" ? "/" : item === "About Us" ? "/#about-us" : `/#${item.toLowerCase().replace(" ", "-")}`}
                 className="font-ubuntu text-[20px] text-white hover:text-gray-300"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -492,7 +492,7 @@ export default function Home() {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Link
-                    href="#"
+                    href={item === "Home" ? "/" : item === "About Us" ? "/#about-us" : `/#${item.toLowerCase().replace(" ", "-")}`}
                     className="font-ubuntu text-[17px] transition-colors"
                     style={{ color: hoveredIndex === index ? 'black' : 'white' }}
                   >
@@ -599,6 +599,7 @@ export default function Home() {
 
     {/* Products Section - Full Width */}
     <div 
+      id="products"
       className="products-section w-full p-0 relative z-40" 
       style={{ 
         marginTop: '20px', 
@@ -690,6 +691,7 @@ export default function Home() {
 
     {/* Reviews Section - Full Width */}
     <div 
+      id="reviews"
       className="reviews-section w-full p-0 relative z-40" 
       style={{ 
         marginTop: '20px', 
@@ -882,6 +884,7 @@ export default function Home() {
 
     {/* About Us Section */}
     <div 
+      id="about-us"
       className="about-us-section w-full p-0 relative z-40"
       style={{ 
         marginTop: '0px', 

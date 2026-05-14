@@ -78,7 +78,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
                     <Link
-                      href={item === "Home" ? "/" : item === "About Us" ? "/about" : `/${item.toLowerCase().replace(" ", "-")}`}
+                      href={item === "Home" ? "/" : item === "Blog" ? "/blog" : item === "About Us" ? "/#about-us" : `/#${item.toLowerCase().replace(" ", "-")}`}
                       className="font-ubuntu text-[17px] transition-colors"
                       style={{ color: hoveredIndex === index ? 'black' : 'white' }}
                     >
@@ -138,7 +138,7 @@ export default function PageLayout({ children, title }: { children: React.ReactN
               {menuItems.map((item) => (
                 <Link
                   key={item}
-                  href={item === "Home" ? "/" : item === "About Us" ? "/about" : `/${item.toLowerCase().replace(" ", "-")}`}
+                  href={item === "Home" ? "/" : item === "Blog" ? "/blog" : item === "About Us" ? "/#about-us" : `/#${item.toLowerCase().replace(" ", "-")}`}
                   className="font-ubuntu text-[20px] text-white hover:text-gray-300"
                   onClick={() => setMobileMenuOpen(false)}
                 >
