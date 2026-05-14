@@ -3,6 +3,7 @@
 import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import "./globals.css";
 import NetworkCanvas from "@/components/NetworkCanvas";
+import { useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    document.title = "KMCQ GmbH, headquartered in Cebu, Philippines. One of the trusted VPS, Data Web Hosting, WordPress Hosting, Email Hosting and etc.";
+  }, []);
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${ubuntu.variable} antialiased`}>
